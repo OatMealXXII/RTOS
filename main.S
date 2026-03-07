@@ -15,15 +15,37 @@ main:
     ldr r1, =0xFAB11F
     str r1, [r0]
 
-ldr r2, =0x40024004
-loop_start:
+    ldr r2, =0x40024004
+wait_xosc:
     ldr r3, [r2]
     cmp r3, #0
-    bpl loop_start
+    bpl wait_xosc
 
-    ldr r3, =0x40008000
-    ldr r4, =0x01
-    str r4, [r3]
+    ldr r0, =0x40008000
+    ldr r1, =0x01
+    str r1, [r0]
+
+    ldr r0, =0x40028008
+    ldr r1, =125
+    str r1, [r0]
+
+    ldr r0, =0x4002800C
+    ldr r1, =0x52000
+    str r1, [r0]
+
+    ldr r0, =0x40028004
+    ldr r1, =0
+    str r1, [r0]
+
+    ldr r0, =0x40028000
+wait_pll:
+    ldr r1, [r0]
+    cmp r1, #0
+    bpl wait_pll
+
+    ldr r0, =0x40008000
+    ldr r1, =0x02
+    str r1, [r0]
 
 end_loop:
     b end_loop
