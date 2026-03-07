@@ -15,12 +15,15 @@ main:
     ldr r1, =0xFAB11F
     str r1, [r0]
 
-
 ldr r2, =0x40024004
 loop_start:
     ldr r3, [r2]
     cmp r3, #0
     bpl loop_start
+
+    ldr r3, =0x40008000
+    ldr r4, =0x01
+    str r4, [r3]
 
 end_loop:
     b end_loop
