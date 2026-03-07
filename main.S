@@ -3,14 +3,14 @@
 .thumb
 .align 4
 
-.global main
+.global _start
 .section .text
 .section "vectors", "a", %progbits
     .word 0x20001000  // Initial Stack Pointer
-    .word main         // Reset Handler
+    .word _start      // Reset Handler
 
-.type main, %function
-main:
+.type _start, %function
+_start:
     ldr r0, =0x40024000
     ldr r1, =0xFAB11F
     str r1, [r0]
