@@ -8,13 +8,21 @@
 .section .text
 .type init_wifi_pin, %function
 init_wifi_pin:
-    ldr r0, =0x400200bc
     mov r1, #5
+    ldr r0, =0x400200bc
+    str r1, [r0]
+    ldr r0, =0x400200c0
+    str r1, [r0]
+    ldr r0, =0x400200c4
+    str r1, [r0]
+    ldr r0, =0x400200d4
     str r1, [r0]
 
     ldr r0, =0xd0000000
-    mov r1, #(1 << 23)
+    ldr r1, =( (1 << 23) | (1 << 24) | (1 << 25) | (1 << 29) )
     str r1, [r0, #0x24]
+
+    ldr r1, =( (1 << 23) | (1 << 25))
     str r1, [r0, #0x14]
     bx  lr
 

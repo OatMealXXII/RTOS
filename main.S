@@ -53,6 +53,13 @@ wait_pll:
     ldr r0, =1500000
     bl delay_cycles
 
+    ldr r0, =0xd0000018
+    mov r1, #(1 << 25)
+    str r1, [r0]
+
+    ldr r0, =0x60000000
+    bl spi_send_data
+
     ldr r4, =wifi_firmware_start
     ldr r5, =wifi_firmware_size
     ldr r5, [r5]
@@ -60,9 +67,28 @@ wait_pll:
 inject_loop:
     ldrb r0, [r4], #1
     bl spi_send_byte
-
     subs r5, r5, #1
     bne inject_loop
-    
+
+    ldr r0, =0xd0000014
+    mov r1, #(1 << 25)
+    str r1, [r0]
+
+    ldr r0, =200000
+    bl delay_cycles
+
+    ldr r0, =0xd0000018
+    mov r1, #(1 << 25)
+    str r1, [r0]
+
+    ldr r0, =0x64000001
+    bl spi_send_data
+    ldr r0, =0x00000001
+    bl spi_send_data
+
+    ldr r0, =0xd0000014
+    mov r1, #(1 << 25)
+    str r1, [r0]
+
 end_loop:
     b end_loop

@@ -1,11 +1,9 @@
-@This code is written from AI first
 .syntax unified
 .cpu cortex-m33
 .thumb
 .align 4
 
 .global spi_send_byte
-
 .section .text
 .type spi_send_byte, %function
 spi_send_byte:
@@ -28,5 +26,28 @@ send_loop:
     lsl r0, r0, #1
     subs r2, r2, #1
     bne send_loop
+
+    pop {r4, pc}
+
+.global spi_send_data
+.type spi_send_data, %function
+spi_send_data:
+    push {r4, lr}
+    mov r4, r0
+
+    lsr r0, r4, #24
+    bl spi_send_byte
+
+    lsr r0, r4, #16
+    and r0, #0xFF
+    bl spi_send_byte
+
+    lsr r0, r4, #8
+    and r0, #0xFF
+    bl spi_send_byte
+
+    mov r0, r4
+    and r0, #0xFF
+    bl spi_send_byte
 
     pop {r4, pc}
