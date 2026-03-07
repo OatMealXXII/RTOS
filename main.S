@@ -4,6 +4,8 @@
 .align 4
 
 .global _start
+.extern wifi_firmware_start
+.extern wifi_firmware_size
 .section .text
 .section "vectors", "a", %progbits
     .word 0x20001000  // Initial Stack Pointer
@@ -47,5 +49,20 @@ wait_pll:
     ldr r1, =0x02
     str r1, [r0]
 
+    bl init_wifi_pin
+    ldr r0, =1500000
+    bl delay_cycles
+
+    ldr r4, =wifi_firmware_start
+    ldr r5, =wifi_firmware_size
+    ldr r5, [r5]
+
+inject_loop:
+    ldrb r0, [r4], #1
+    bl spi_send_byte
+
+    subs r5, r5, #1
+    bne inject_loop
+    
 end_loop:
     b end_loop

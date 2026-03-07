@@ -55,9 +55,10 @@ The build process involves three stages: assembling the source, linking memory a
 ```bash
 # Assemble source into object file
 arm-none-eabi-as -mcpu=cortex-m33 -mthumb -o main.o main.S
+arm-none-eabi-as -mcpu=cortex-m33 -mthumb -o gpio.o gpio.S
 
 # Link at Flash base address (0x10000000)
-arm-none-eabi-ld -Ttext 0x10000000 -o main.elf main.o
+arm-none-eabi-ld -Ttext 0x10000000 -o main.elf main.o gpio.o
 
 # Convert to UF2 for deployment
 elf2uf2-rs main.elf main.uf2
