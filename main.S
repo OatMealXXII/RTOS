@@ -1,15 +1,17 @@
 .syntax unified
 .cpu cortex-m33
 .thumb
+.align 4
 
 .global main
 .section .text
+.section "vectors", "a", %progbits
+    .word 0x20001000  // Initial Stack Pointer
+    .word main         // Reset Handler
 
+.type main, %function
 main:
-    movs r0, #10
-    movs r1, #20
-
-    adds r0, r0, r1
+    ldr r0, =0x20000000
 
 end_loop:
     b end_loop
