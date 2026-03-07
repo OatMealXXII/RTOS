@@ -12,28 +12,28 @@ Before building the kernel, ensure your environment is configured with the follo
 
 ```bash
 sudo apt update
-sudo apt install gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi libudev-dev pkg-config
+sudo apt install gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi libudev-dev pkg-config picotool
 
 ```
 
 #### **Fedora / RHEL**
 
 ```bash
-sudo dnf install arm-none-eabi-gcc-cs arm-none-eabi-newlib systemd-devel
+sudo dnf install arm-none-eabi-gcc-cs arm-none-eabi-newlib systemd-devel picotool
 
 ```
 
 #### **Arch Linux**
 
 ```bash
-sudo pacman -S arm-none-eabi-gcc arm-none-eabi-binutils arm-none-eabi-newlib systemd pkgconf
+sudo pacman -S arm-none-eabi-gcc arm-none-eabi-binutils arm-none-eabi-newlib systemd pkgconf picotool
 
 ```
 
 #### **Alpine Linux**
 
 ```bash
-sudo apk add gcc-arm-none-eabi binutils-arm-none-eabi udev-dev pkgconfig
+sudo apk add gcc-arm-none-eabi binutils-arm-none-eabi udev-dev pkgconfig picotool
 
 ```
 
@@ -65,6 +65,12 @@ elf2uf2-rs main.elf main.uf2
 ```
 
 ## Deployment
+
+Use <b>`picotool`<b> to flash to Pico 2W
+
+```bash
+picotool load -x main.elf
+```
 
 1. Connect your **Pico 2W** to your workstation (PC, Laptop not required if you have any devices to flash) while holding the **BOOTSEL** button.
 2. Mount the device and copy `main.uf2` to the drive.
