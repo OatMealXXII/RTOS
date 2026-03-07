@@ -11,7 +11,16 @@
 
 .type main, %function
 main:
-    ldr r0, =0x20000000
+    ldr r0, =0x40024000
+    ldr r1, =0xFAB11F
+    str r1, [r0]
+
+
+ldr r2, =0x40024004
+loop_start:
+    ldr r3, [r2]
+    cmp r3, #0
+    bpl loop_start
 
 end_loop:
     b end_loop
