@@ -54,7 +54,6 @@ The build process involves three stages: assembling the source, linking memory a
 
 ```bash
 # Assemble source into object file
-# 1. รวบรวมวัตถุดิบ
 arm-none-eabi-as -mcpu=cortex-m33 -o main.o main.S
 arm-none-eabi-as -mcpu=cortex-m33 -o gpio.o gpio.S
 arm-none-eabi-as -mcpu=cortex-m33 -o firmware.o firmware.S
