@@ -1,3 +1,7 @@
+# This repository still in development section all Assembly still not work on RP2350
+
+---
+
 # RTOS: ARM Cortex-M33 Assembly Kernel for RP2350
 
 A lightweight, bare-metal RTOS kernel designed for the **Raspberry Pi Pico 2W**, written entirely in ARM Assembly. This project focuses on high-performance system initialization, including custom XOSC and PLL configurations to achieve a stable **150MHz** system clock.
