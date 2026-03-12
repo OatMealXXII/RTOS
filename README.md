@@ -54,16 +54,16 @@ The build process involves three stages: assembling the source, linking memory a
 
 ```bash
 # Assemble source into object file
-arm-none-eabi-as -mcpu=cortex-m33 -o main.o main.S
-arm-none-eabi-as -mcpu=cortex-m33 -o gpio.o gpio.S
-arm-none-eabi-as -mcpu=cortex-m33 -o firmware.o firmware.S
-arm-none-eabi-as -mcpu=cortex-m33 -o spi_driver.o spi_driver.S
+arm-none-eabi-as -mcpu=cortex-m33 -o build/main.o src/main.s
+arm-none-eabi-as -mcpu=cortex-m33 -o build/gpio.o src/gpio.s
+arm-none-eabi-as -mcpu=cortex-m33 -o build/firmware.o src/firmware.s
+arm-none-eabi-as -mcpu=cortex-m33 -o build/spi_driver.o src/spi_driver.s
 
 # Link at Flash base address (0x10000000)
-arm-none-eabi-ld -Ttext 0x10000000 -o main.elf main.o gpio.o firmware.o spi_driver.o
+arm-none-eabi-ld -Ttext 0x00000000 -o build/main.elf build/main.o build/gpio.o build/firmware.o build/spi_driver.o
 
 # Convert to UF2 for deployment
-elf2uf2-rs main.elf main.uf2
+elf2uf2-rs build/main.elf build/main.uf2
 
 ```
 
@@ -72,16 +72,16 @@ elf2uf2-rs main.elf main.uf2
 Use <b>`picotool`<b> to flash to Pico 2W
 
 ```bash
-picotool load -x main.elf
+picotool load -x build/main.elf
 ```
 
 1. Connect your **Pico 2W** to your workstation (PC, Laptop not required if you have any devices to flash) while holding the **BOOTSEL** button.
-2. Mount the device and copy `main.uf2` to the drive.
+2. Mount the device and copy `/build/main.uf2` to the drive.
 3. The system will reboot and initialize the 150MHz PLL ignition sequence.
 
 ## Troubleshooting
 
 * **Missing libudev**: If `elf2uf2-rs` fails to compile, verify that the `systemd-devel` (Fedora) or `libudev-dev` (Debian) headers are installed.
-* **ASM Newline Warning**: Ensure `main.S` ends with a trailing newline to avoid assembler warnings.
+* **ASM Newline Warning**: Ensure `main.s` ends with a trailing newline to avoid assembler warnings.
 
 ---
